@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+  <span>AppUsers</span>
+  <span class="example-spacer"></span>
+
+  <!-- Botones del menú que se ocultarán en pantallas pequeñas -->
+  <div class="menu-buttons" [class.hidden]="isMobile">
+    <button mat-button *ngFor="let item of menu" [routerLink]="item.redirect">{{item.nombre}}</button>
+  </div>
+
+  <!-- Botón de menú de hamburguesa que se mostrará solo en pantallas pequeñas -->
+  <button mat-icon-button (click)="toggleMenu()" *ngIf="isMobile" class="menu-icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="example-spacer"></span>
+  <button routerLink="/logaut" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+
+<!-- Menú desplegable para pantallas pequeñas -->
+<div class="mobile-menu" *ngIf="isMobile && isMenuOpen">
+  <button mat-button *ngFor="let item of menu" [routerLink]="item.redirect" (click)="toggleMenu()">{{item.nombre}}</button>
+</div>
+<!--
+  
+  <mat-toolbar color="primary">  
+      <span>AppUsers</span> 
+      <span class="example-spacer"></span>
+  
+      <button mat-button *ngFor= "let item of menu" [routerLink]= "item.redirect" >{{item.nombre}}</button>
+      
+      <span class="example-spacer"></span>
+      <button routerLink="/logaut" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+          <mat-icon>logout</mat-icon>
+        </button>
+    </mat-toolbar>
+
+-->
+
+
+  <!--
+  <div *ngFor="let item of items">
+  <button>{{ item.name }}</button>
+</div>
+   <button mat-button *ngFor= "let item of menu" [routerLink]= "item.redirect" >{{item.nombre}}</button>
+  
+  -->

@@ -1,0 +1,31 @@
+
+.table {
+   width: 100%;
+   margin-top: 20px;
+  }
+
+
+  th{
+   width: 20%;
+  }
+
+  .pointer{
+   cursor: pointer;
+  }
+
+
+  /* Structure 
+   table {
+      width: 100%;
+   }
+ */
+ .mat-mdc-form-field {
+   font-size: 14px;
+   width: 100%;
+ }
+
+ /* Estilo para la columna id */
+.column-id {
+  width: 50px; /* Ajusta este valor según tus necesidades */
+  padding-right: 0; /* Elimina el padding derecho para acercarla a la siguiente columna */
+}

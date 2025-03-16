@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+
+/*@import './styles_manuales/theme.scss';*/
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.container{ 
+ 
+  margin-top: 5px;
+  
+ 
+}
+
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  /* Tabla responsive */
+  .table-container {
+    overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
+  }
+  
+  /* Ajustes para pantallas pequeñas (menos de 600px) */
+  @media (max-width: 600px) {
+    .mat-toolbar span {
+      font-size: 14px; /* Reduce el tamaño del texto en el toolbar */
+    }
+  
+    .mat-fab {
+      width: 40px; /* Reduce el tamaño del botón "AGREGAR" */
+      height: 40px;
+    }
+  
+    .mat-form-field {
+      width: 100%; /* El filtro ocupa todo el ancho */
+    }
+  
+    .mat-table {
+      min-width: 500px; /* Ancho mínimo para la tabla */
+    }
+  
+    .mat-paginator {
+      width: 100%; /* El paginador ocupa todo el ancho */
+    }
+  }

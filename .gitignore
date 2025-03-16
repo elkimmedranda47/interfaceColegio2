@@ -1,0 +1,44 @@
+# Archivos de Angular
+dist/
+.angular/
+.cache/
+.DS_Store
+
+# Dependencias de Node.js
+node_modules/
+package-lock.json
+yarn.lock
+
+# Archivos de compilación
+build/
+out-tsc/
+
+# Archivos de configuración de IDEs
+.idea/
+.vscode/
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de registro
+*.log
+
+# Archivos de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos de paquetes
+*.tgz
+*.zip
+*.rar
+
+# Archivos de depuración
+*.pyc
+*.swp
+
+# Archivos de prueba
+coverage/

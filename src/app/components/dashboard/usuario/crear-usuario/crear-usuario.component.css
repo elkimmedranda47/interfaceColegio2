@@ -1,0 +1,74 @@
+/*
+
+.containercrearusuario {
+  margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 5px;
+
+}
+
+
+.ancho {
+  width: 100%;
+}
+
+
+
+
+@media (max-width: 600px) {
+    .responsive-img {
+      width:250 ;
+      height:250;
+      height: auto;
+      margin-bottom: 20px; 
+    }
+  
+    .ancho {
+      width: 100%;
+    }
+  
+    button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+
+
+
+  */
+
+
+  /* Estilos para pantallas grandes */
+.containercrearusuario {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-top: 5px;
+}
+
+.ancho {
+  width: 100%;
+}
+
+.responsive-img {
+  width: 250px;
+  height: 250px;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 600px) {
+  .containercrearusuario {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .responsive-img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px; /* Espacio entre la imagen y los campos */
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
