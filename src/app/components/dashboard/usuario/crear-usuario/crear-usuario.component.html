@@ -151,75 +151,90 @@
 
 
 <div class="containercrearusuario">
-  <!-- Toolbar -->
   <mat-toolbar style="background-color: #d9d9d9;">
-    <span>{{operacion}} USUARIO</span>
+    <span>{{ operacion }} PERSONA</span>
   </mat-toolbar>
 
   <mat-card appearance="outlined" style="margin-top: 10px;">
     <mat-card-content>
-      <form [formGroup]= "form" (ngSubmit)="agregarusuario()" >
-        <!-- Usamos mat-grid-list con cols dinámicos -->
+      <form [formGroup]="form" (ngSubmit)="agregarPersona()">
         <mat-grid-list [cols]="getGridColumns()" rowHeight="70px" [gutterSize]="'10px'">
-
-          <!-- ID -->
           <mat-grid-tile [colspan]="getColspanId()" [rowspan]="1">
             <mat-form-field class="ancho">
               <mat-label>ID</mat-label>
-              <input matInput autocomplete="off" formControlName="id" [readonly]="true">
+              <input matInput autocomplete="off" formControlName="idPersona" [readonly]="true" />
             </mat-form-field>
           </mat-grid-tile>
-          
-          <!-- Usuario -->
+
           <mat-grid-tile [colspan]="getColspanUsuario()" [rowspan]="1">
             <mat-form-field class="ancho">
-              <mat-label>Usuario</mat-label>
-              <input matInput autocomplete="off" formControlName="usuario">
+              <mat-label>Email</mat-label>
+              <input matInput autocomplete="off" formControlName="email" />
             </mat-form-field>
           </mat-grid-tile>
 
-          <!-- Imagen -->
-          <mat-grid-tile [colspan]="getColspanImagen()" [rowspan]="4">
-            <img src="./assets/img/persona.png" class="responsive-img">
-          </mat-grid-tile>
-
-          <!-- Nombre -->
           <mat-grid-tile [colspan]="getColspanNombre()" [rowspan]="1">
             <mat-form-field class="ancho">
               <mat-label>Nombre</mat-label>
-              <input matInput autocomplete="off" formControlName="nombre">
+              <input matInput autocomplete="off" formControlName="nombre" />
             </mat-form-field>
           </mat-grid-tile>
 
-          <!-- Apellido -->
           <mat-grid-tile [colspan]="getColspanApellido()" [rowspan]="1">
             <mat-form-field class="ancho">
               <mat-label>Apellido</mat-label>
-              <input matInput autocomplete="off" formControlName="apellido">
+              <input matInput autocomplete="off" formControlName="apellido" />
             </mat-form-field>
           </mat-grid-tile>
 
-          <!-- Sexo -->
+        <!-- Fecha de Nacimiento -->
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-form-field class="ancho">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+
           <mat-grid-tile [colspan]="1" [rowspan]="1">
             <mat-form-field class="ancho">
-              <mat-label>Sexo</mat-label>
-              <mat-select formControlName="sexo"  >
-                <mat-option *ngFor="let item of sexo" [value]="item">{{item}}</mat-option>
-               
+              <mat-label>Teléfono</mat-label>
+              <input matInput autocomplete="off" formControlName="telefono" />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-form-field class="ancho">
+              <mat-label>Contraseña</mat-label>
+              <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [colspan]="getColspanTipo()" [rowspan]="1">
+            <mat-form-field class="ancho">
+              <mat-label>Tipo de Persona</mat-label>
+              <mat-select formControlName="tipo">
+                <mat-option *ngFor="let tipo of tiposPersona" [value]="tipo">
+                  {{ tipo }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </mat-grid-tile>
 
-          <!-- Botones -->
+          <mat-grid-tile [colspan]="getColspanImagen()" [rowspan]="4">
+            <img src="./assets/img/persona.png" class="responsive-img" />
+          </mat-grid-tile>
+
           <mat-grid-tile [colspan]="getColspanBotones()" [rowspan]="1">
-            <button mat-raised-button style="margin-right: 20px" routerLink="/dashboard/usuarios">
+            <button mat-raised-button style="margin-right: 20px" routerLink="/dashboard/personas">
               Volver
             </button>
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"  style="border-radius: 8px;">
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" style="border-radius: 8px;">
               Aceptar
             </button>
           </mat-grid-tile>
-
         </mat-grid-list>
       </form>
     </mat-card-content>

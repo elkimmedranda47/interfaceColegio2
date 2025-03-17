@@ -10,6 +10,9 @@ import { PersonaDTO,TipoPersona } from '../../../../interfaces/escuelaInterfaces
 import { UsuarioService } from '../../../../services/usuario.service';
 
 
+//CALENDARIO
+import {MatCalendar, MatDatepickerModule} from '@angular/material/datepicker';
+
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
@@ -29,6 +32,9 @@ private id_url:number;
 
 operacion:string = 'AGREGAR';
 
+
+tiposPersona: string[] = Object.values(TipoPersona);
+
 constructor(
   private fb: FormBuilder,
   private _usuarioService: UsuarioService,
@@ -37,6 +43,8 @@ constructor(
   private aRouter: ActivatedRoute
 
 ) {
+
+/*
   this.form = this.fb.group({
     id: [''], // Agrega el control para el id
     PersonaDTO: ['',Validators.required],
@@ -44,6 +52,17 @@ constructor(
     apellido: ['',Validators.required],
     sexo: ['',Validators.required]
 
+  });
+  */
+  this.form = this.fb.group({
+    idPersona: [''],
+    nombre: ['', Validators.required],
+    apellido: ['', Validators.required],
+    fechaNacimiento: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    telefono: [''],
+    password: ['', Validators.required],
+    tipo: ['', Validators.required],
   });
 
   this.screenWidth = window.innerWidth;
@@ -104,7 +123,7 @@ getColspanBotones(): number {
 
 
 
-agregarusuario(){
+agregarPersona(){
   //console.log(this.form);
 /*
   const user: PersonaDTO={
@@ -201,7 +220,9 @@ getUsuairoId(id: number) {
       }
     }
 
-
+    getColspanTipo(): number {
+      return this.screenWidth > 600 ? 1 : 1; // Ajusta el valor según tus necesidades
+    }
 
 
 }

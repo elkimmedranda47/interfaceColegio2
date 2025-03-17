@@ -9,11 +9,22 @@
         "redirect": "/dashboard/usuarios"
         
     },
+    
+    {
+        "nombre": "curso",
+        "redirect": "/dashboard/curso"
+        
+    } ,
+    {
+        "nombre": "profesor",
+        "redirect": "/dashboard/profesor"
+        
+    } 
+    ,
     {
         "nombre": "Reporstes",
         "redirect": "/dashboard/reportes"
         
     }
-    
 ]
 
