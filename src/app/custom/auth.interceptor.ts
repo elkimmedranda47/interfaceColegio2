@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-/*
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
      //  debugger;
      console.log('llegamos al interceptor');
@@ -26,7 +26,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     
      //return next(req);
 };
-*/
+
+
+/*
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Excluir la solicitud de login
@@ -45,3 +47,5 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
   return next(req);
 };
+
+*/

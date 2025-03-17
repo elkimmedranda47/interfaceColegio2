@@ -15,9 +15,16 @@ import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AccesoService } from '../../services/acceso.service';
+//import jwt_decode from 'jwt-decode';
+//import jwt_decode, { JwtPayload } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+
 
 import { Login } from '../../interfaces/Login';
 
+interface DecodedToken {
+  role: string;
+}
 
 
 
@@ -57,8 +64,6 @@ export class LoginComponent {
       )
     }
   
-    
-
 
   ingresar(){
 
@@ -77,65 +82,49 @@ export class LoginComponent {
       password
     };
 
-   /*
-    if (usuario == "nn@gmail.com" && password == "123456" ) {
 
-      //Redireccionamos al dashboard
-      this.fakeLoding();
-
-    } else {
-
-      //Moatramos un mensaje de error;
-      this.error();
-      this.form.reset();
-
-    }
-    */
-   // Assuming your AccesoService has a login method that returns an Observable
-   /*
-   this.accesoService.login(objeto).subscribe({
+  this.accesoService.login(objeto).subscribe({
     next: (response) => {
-      // Extract token from response (modify based on your API's response structure)
-      const token = response.headers?.get('Authorization')?.split(' ')[1];
+      const token = response.body.token;
+
       console.log("Mi Token:-->  Bearer: ", token);
 
       if (token) {
         localStorage.setItem('token', token);
-       // this.router.navigate(['inicio']);
-       this.route.navigateByUrl('/dashboard');
+        try {
+          const decodedToken: DecodedToken = jwtDecode(token);
+          const role = decodedToken.role;
+
+          console.log('Rol del usuario:', role);
+
+          if (role === "ADMINISTRATIVO") {
+            this.route.navigate(['/dashboard']);
+          } else if (role === "PROFESOR") {
+            this.route.navigate(['/profesor']);
+          } else if (role === "ESTUDIANTE") {
+            this.route.navigate(['/estudiante']);
+          } else {
+            alert('Rol no reconocido');
+          }
+        } catch (error) {
+          console.error('Error al decodificar el token:', error);
+          alert('Error al decodificar el token');
+        }
       } else {
         alert('No se encontró el token en la respuesta');
       }
     },
-    error: (error) => {
-      console.error('Error al ingresar:', error.message);
-    }
+   
   });
 
-  */
-
-  this.accesoService.login(objeto).subscribe({
-    next: (response) => {
-        // Extract token from response body
-        const token = response.body.token; // Assuming token is in response.body.token
-
-        console.log("Mi Token:-->  Bearer: ", token);
-
-        if (token) {
-            localStorage.setItem('token', token);
-            this.route.navigateByUrl('/dashboard');
-        } else {
-            alert('No se encontró el token en la respuesta');
-        }
-    },
-    error: (error) => {
-        console.error('Error al ingresar:', error.message);
-    }
-});
 
 
    
   }
+
+
+
+
 
 
   /*openSnackBar(message: string, action: string) {
@@ -164,3 +153,4 @@ export class LoginComponent {
 
 
 }
+
