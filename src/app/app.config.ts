@@ -6,6 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { MatSliderModule } from '@angular/material/slider';
+import { authInterceptor } from './custom/auth.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
               
@@ -13,6 +14,6 @@ export const appConfig: ApplicationConfig = {
               MatSliderModule,
               provideAnimationsAsync(),
               importProvidersFrom(HttpClientModule),  
-              provideHttpClient()
+              provideHttpClient(withInterceptors([authInterceptor]))
             ]
 };

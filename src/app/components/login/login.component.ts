@@ -1,4 +1,4 @@
-import { Component ,inject} from '@angular/core';
+import { Component ,Inject,inject} from '@angular/core';
 
 //AQUI VAMOS IMPORTANDO LOS IMPUT CAJA DE TEXTO DE ANGULAR MATERIAL
 /*import {MatFormFieldModule} from '@angular/material/form-field';
@@ -14,6 +14,9 @@ import { SharedModule } from '../shared/shared.module';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AccesoService } from '../../services/acceso.service';
+
+import { Login } from '../../interfaces/Login';
 
 
 
@@ -44,7 +47,7 @@ export class LoginComponent {
     private _snackBar = inject(MatSnackBar);
     loading=false;
 
-    constructor(private fb:FormBuilder,private route: Router){
+    constructor(private fb:FormBuilder,private route: Router, @Inject(AccesoService) private accesoService: AccesoService){
 
         this.form=this.fb.group({
         usuario:['',Validators.required],
@@ -62,11 +65,19 @@ export class LoginComponent {
     console.log("llegamos");
 
     /*console.log(this.form) ;*/
-    const usuario = this.form.value.usuario;
+    const correo = this.form.value.usuario;
     const password = this.form.value.password;
-    console.log(" " + usuario);
+    
+    console.log(" " + correo);
     console.log(password);
 
+    const objeto: Login = {
+      correo,
+    
+      password
+    };
+
+   /*
     if (usuario == "nn@gmail.com" && password == "123456" ) {
 
       //Redireccionamos al dashboard
@@ -79,6 +90,50 @@ export class LoginComponent {
       this.form.reset();
 
     }
+    */
+   // Assuming your AccesoService has a login method that returns an Observable
+   /*
+   this.accesoService.login(objeto).subscribe({
+    next: (response) => {
+      // Extract token from response (modify based on your API's response structure)
+      const token = response.headers?.get('Authorization')?.split(' ')[1];
+      console.log("Mi Token:-->  Bearer: ", token);
+
+      if (token) {
+        localStorage.setItem('token', token);
+       // this.router.navigate(['inicio']);
+       this.route.navigateByUrl('/dashboard');
+      } else {
+        alert('No se encontró el token en la respuesta');
+      }
+    },
+    error: (error) => {
+      console.error('Error al ingresar:', error.message);
+    }
+  });
+
+  */
+
+  this.accesoService.login(objeto).subscribe({
+    next: (response) => {
+        // Extract token from response body
+        const token = response.body.token; // Assuming token is in response.body.token
+
+        console.log("Mi Token:-->  Bearer: ", token);
+
+        if (token) {
+            localStorage.setItem('token', token);
+            this.route.navigateByUrl('/dashboard');
+        } else {
+            alert('No se encontró el token en la respuesta');
+        }
+    },
+    error: (error) => {
+        console.error('Error al ingresar:', error.message);
+    }
+});
+
+
    
   }
 

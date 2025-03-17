@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
+import { authGuard } from './custom/auth.guard';
 
 export const routes: Routes = [
 
@@ -13,7 +14,7 @@ export const routes: Routes = [
     { path: 'dashboard',loadChildren:() => import('./components/dashboard/dashboard.module').then(x=>x.DashboardModule)}
     ,
     //si el usuario pone cual quier cosa /logineerrxxz redirecionar al login
-    {path: '**',redirectTo:'login', pathMatch:'full'}
+    {path: '**',redirectTo:'login', pathMatch:'full',}
     
 
 ];
