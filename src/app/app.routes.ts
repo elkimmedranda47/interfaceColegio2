@@ -17,7 +17,7 @@ export const routes: Routes = [
     { path: 'login',component:ProfesorComponent,canActivate: [authGuard] }
     ,
     //carga peresosa, se cargara el modulo solo cunado la ruta sea {path: 'dashboard'}
-    { path: 'dashboard',loadChildren:() => import('./components/dashboard/dashboard.module').then(x=>x.DashboardModule)}
+    { path: 'dashboard',loadChildren:() => import('./components/dashboard/dashboard.module').then(x=>x.DashboardModule),canActivate: [authGuard]}
     ,
     //si el usuario pone cual quier cosa /logineerrxxz redirecionar al login
     {path: '**',redirectTo:'login', pathMatch:'full',}

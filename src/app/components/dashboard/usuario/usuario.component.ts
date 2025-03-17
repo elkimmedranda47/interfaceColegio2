@@ -1,6 +1,8 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
-import { Usuario } from '../../../interfaces/usuario';
+//import { Usuario } from '../../../interfaces/usuario';
+import { PersonaDTO ,TipoPersona} from '../../../interfaces/escuelaInterfaces/PersonaDTO';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -9,6 +11,9 @@ import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+
+
+
 
 
 
@@ -35,9 +40,14 @@ export class UsuarioComponent {
   //private _liveAnnouncer = inject(LiveAnnouncer);
 
   //inicializar variable listusuario con un array I_usuario Vacia
-  listUsuario: Usuario[]=[];
+  //listUsuario: Usuario[]=[];
+  listUsuario: PersonaDTO[]=[];
 
-  displayedColumns: string[] = ['id','usuario', 'nombre', 'apellido', 'sexo', 'acciones'];
+
+
+  //displayedColumns: string[] = ['id','usuario', 'nombre', 'apellido', 'sexo', 'acciones'];
+  displayedColumns: string[] = ['idPersona', 'nombre', 'apellido', 'fechaNacimiento', 'email', 'telefono', 'tipo', 'acciones'];
+
   //dataSource = this.listUsuario;
   // dataSource = new MatTableDataSource(this.listUsuario);
   
@@ -80,7 +90,7 @@ export class UsuarioComponent {
   }
 
 
-  eliminarUsuario(element: Usuario){
+  eliminarUsuario(element: PersonaDTO){
     const index = this.dataSource.data.indexOf(element);
     this._usuarioService.eliminarUsuario(index);
      // Actualiza el dataSource con la nueva lista de usuarios
@@ -95,8 +105,8 @@ export class UsuarioComponent {
     });
   }
 
-  buscarUsuario(element: Usuario) {
-    const usuarioEncontrado = this._usuarioService.buscarUsuario(element.usuario);
+  buscarUsuario(element: PersonaDTO) {
+    const usuarioEncontrado = this._usuarioService.buscarUsuario(element.email);
     if (usuarioEncontrado) {
       console.log("Usuario encontrado:", usuarioEncontrado);
     } else {
@@ -104,9 +114,9 @@ export class UsuarioComponent {
     }
   }
 
-  updateUsuario( element: Usuario) {
+  updateUsuario( element: PersonaDTO) {
     console.log( "uaurioComponente: "+  JSON.stringify(element, null, 2));
-    this.router.navigate(["dashboard/editar-usuario/"+element.id]);
+    this.router.navigate(["dashboard/editar-usuario/"+element.idPersona]);
 
   }
   

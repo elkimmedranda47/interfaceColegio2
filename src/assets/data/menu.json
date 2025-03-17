@@ -1,11 +1,11 @@
 [
     {
-        "nombre": "Dashboar",
+        "nombre": "Matricula",
         "redirect": "/dashboard"
         
     } ,
     {
-        "nombre": "Usuario",
+        "nombre": "Persona",
         "redirect": "/dashboard/usuarios"
         
     },
