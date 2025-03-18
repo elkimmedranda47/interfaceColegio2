@@ -126,4 +126,11 @@ export class UsuarioService {
   getUsuairoId(id:number){
     return   this.listUsuario.find(user => user.idPersona === id);
   }
+
+  //Devolver las personas de tipo  estudinates. 
+  obtenerEstudiantes(): PersonaDTO[] {
+    return this.listUsuario.filter(persona => persona.tipo === TipoPersona.ESTUDIANTE);
+  }
+
+
 }

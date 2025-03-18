@@ -7,6 +7,7 @@ import { ReportesComponent } from './reportes/reportes.component';
 import { CrearUsuarioComponent } from './usuario/crear-usuario/crear-usuario.component';
 import { ProfesorComponent } from '../profesor/profesor.component';
 import { CursoComponent } from './curso/curso.component';
+import { MatricularInicioComponent } from './inicio/matricular-inicio/matricular-inicio.component';
 
 
 //# SISTEMA DE RUTEO HIJOS
@@ -20,8 +21,12 @@ const routes: Routes = [
     { path: 'curso', component: CursoComponent },
 
     { path: 'crear-usuario', component: CrearUsuarioComponent },
-    { path: 'editar-usuario/:id', component: CrearUsuarioComponent }
+    { path: 'editar-usuario/:id', component: CrearUsuarioComponent },
      //se crea una nueva ruta = "crear-usuario"
+
+     { path: 'matricular-inicio', component:MatricularInicioComponent},
+     { path: 'matricula-academica/:id', component: MatricularInicioComponent }
+    
 
   ]}
 ];

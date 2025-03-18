@@ -1,26 +1,49 @@
+
+/*
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-matricular-inicio',
+  standalone: true,
+  imports: [],
+  templateUrl: './matricular-inicio.component.html',
+  styleUrl: './matricular-inicio.component.css'
+})
+export class MatricularInicioComponent {
+
+}
+*/
+
 import { Component, HostListener } from '@angular/core';
 import { SharedModule } from '../../../shared/shared.module';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { MatTableDataSource } from '@angular/material/table';
+
 //import { Usuario } from '../../../../interfaces/usuario';
 import { PersonaDTO,TipoPersona } from '../../../../interfaces/escuelaInterfaces/PersonaDTO';
 
 import { UsuarioService } from '../../../../services/usuario.service';
 
+import { InicioMatriculaService } from '../../../../services/inicio-matricula.service';
+
 
 //CALENDARIO
 import {MatCalendar, MatDatepickerModule} from '@angular/material/datepicker';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatriculaDTO } from '../../../../interfaces/escuelaInterfaces/MatriculaDTO';
+import { CursoDTO } from '../../../../interfaces/escuelaInterfaces/CursoDTO';
 
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
   imports: [SharedModule,RouterLink,CommonModule],
-  templateUrl: './crear-usuario.component.html',
-  styleUrl: './crear-usuario.component.css'
+  templateUrl: './matricular-inicio.component.html',
+  styleUrl: './matricular-inicio.component.css'
 })
-export class CrearUsuarioComponent {
+export class MatricularInicioComponent {
 
 
 // Variables para controlar el diseño responsive
@@ -31,18 +54,48 @@ screenWidth: number;
 private id_url:number;
 
 operacion:string = 'AGREGAR';
-
-
 tiposPersona: string[] = Object.values(TipoPersona);
+
+
+
+//////////////////////
+
+listUsuario: CursoDTO[]=[];
+
+  //displayedColumns: string[] = ['id','usuario', 'nombre', 'apellido', 'sexo', 'acciones'];
+  displayedColumns: string[] = ['idCurso', 'nombre', 'descripcion', 'creditos','idProfesor','acciones'];
+   //datasor va ahcer de tipo MatTableDataSource
+   dataSource!: MatTableDataSource<any>
+
+   //NUEVO columnas
+ 
+   applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filteredData
+  }
+
+
+
+//////////////////////
+
+
+
 
 constructor(
   private fb: FormBuilder,
   private _usuarioService: UsuarioService,
+
+  private _InicioMatriculaService: InicioMatriculaService,
   private router:Router,
+  private _snackBar: MatSnackBar,
 
   private aRouter: ActivatedRoute
 
 ) {
+
+
+  
 
 /*
   this.form = this.fb.group({
@@ -78,6 +131,9 @@ ngOnInit():void{
       
       this.getUsuairoId(this.id_url);
   }
+
+  /////////////////
+  this.cargarUsuario();
 }
 
 
@@ -135,6 +191,8 @@ agregarPersona(){
     sexo: this.form.value.sexo
   }
 */
+
+
 const user: PersonaDTO = {
   idPersona: this.form.value.id, // Asumiendo que 'id' es el ID de la persona
   nombre: this.form.value.nombre,
@@ -147,6 +205,8 @@ const user: PersonaDTO = {
 };
   console.log( "Usuario a crear o a tualizar: "+  JSON.stringify(user, null, 2));
   console.log("id del usuario a crear o a tualizar: "+user.idPersona);
+
+  
 
   if (this.id_url !=0) {
     // AQUI LLEGA EL user pero sin id 
@@ -168,19 +228,7 @@ const user: PersonaDTO = {
   this.router.navigate(["/dashboard/usuarios"]);
   
 }
-/*
-getUsuario (id:number){
-  
-  this._usuarioService.getUsuairoId(id);
-  //this.form.setValue({});
-  this.form.patchValue({
-    
-  });
-  console.log(this._usuarioService.getUsuairoId(id));
 
-}
-
-*/
 
 getUsuairoId(id: number) {
   // Obtener el usuario por su ID
@@ -201,14 +249,12 @@ getUsuairoId(id: number) {
     });
 */
 
+//datos del estudiante
     if (persona) {
       this.form.patchValue({
         idPersona: persona.idPersona,
         nombre: persona.nombre,
-        apellido: persona.apellido,
-        fechaNacimiento: persona.fechaNacimiento,
-        email: persona.email,
-        telefono: persona.telefono,
+        email: persona.email,     
         tipo: persona.tipo,
         // No incluyo password por seguridad
       });
@@ -219,10 +265,117 @@ getUsuairoId(id: number) {
         console.error('Usuario no encontrado con el ID:', id);
       }
     }
-
+    
+  
     getColspanTipo(): number {
       return this.screenWidth > 600 ? 1 : 1; // Ajusta el valor según tus necesidades
     }
+
+    ////////////////////////////////
+    buscarUsuario(element: PersonaDTO) {
+      const usuarioEncontrado = this._usuarioService.buscarUsuario(element.email);
+      if (usuarioEncontrado) {
+        console.log("Usuario encontrado:", usuarioEncontrado);
+      } else {
+        console.log("Usuario no encontrado");
+      }
+    }
+/*
+    updateUsuario( element: any) {
+      console.log( "uaurioComponente: "+  JSON.stringify(element, null, 2));
+      this.router.navigate(["dashboard/editar-usuario/"+element.idPersona]);
+  
+    }
+    */
+
+    updateUsuario(idPersona: number, idCurso: number): void {
+      console.log(`Actualizar usuario con ID Persona: ${idPersona} y ID Curso: ${idCurso}`);
+      // Aquí puedes agregar la lógica para actualizar el usuario con idPersona e idCurso
+  }
+
+    eliminarUsuario(element: PersonaDTO){
+      const index = this.dataSource.data.indexOf(element);
+      this._usuarioService.eliminarUsuario(index);
+       // Actualiza el dataSource con la nueva lista de usuarios
+      this.dataSource.data = this._usuarioService.getUsuario();
+      // Forzar la actualización de la vista
+      this.dataSource._updateChangeSubscription();    
+      this._snackBar.open('El Usuario  Fue Eliminado Con Exito.','',{
+        duration:1500,
+        horizontalPosition:'center',
+        verticalPosition:'bottom'
+      // verticalPosition:'top'
+      });
+    }
+    
+
+ 
+
+ cargarUsuario(){
+    this.listUsuario=this._InicioMatriculaService.getCursos()
+    this. dataSource = new MatTableDataSource(this._InicioMatriculaService.getCursos());
+  }
+
+
+
+  matricular(idPersona: number, idCurso: number): void {
+
+    console.log(`Matricular persona con ID: ${idPersona} en curso con ID: ${idCurso}`);
+
+    // Lógica de matriculación:
+    // 1. Obtener la persona y el curso (si es necesario)
+    const persona = this._usuarioService.getUsuairoId(idPersona);
+    // const curso = this._cursoService.getCursoById(idCurso); // Si tienes un servicio para cursos
+
+    // 2. Verificar si la persona y el curso existen (si es necesario)
+    if (!persona) {
+      this._snackBar.open('Persona no encontrada', 'Cerrar', { duration: 3000 });
+      return;
+    }
+
+    // 3. Crear el objeto de matrícula (ajusta esto según tu modelo de datos)
+    const matricula = {
+      idPersona: persona.idPersona,
+      idCurso: idCurso,
+      fechaMatricula: new Date(), // O la fecha que necesites
+      // ... otros campos de la matrícula
+    };
+    /*
+
+    // 4. Llamar al servicio para guardar la matrícula
+    this._usuarioService.matricularPersona(matricula).subscribe({
+      next: (response) => {
+        console.log('Matrícula guardada:', response);
+        this._snackBar.open('Matrícula realizada con éxito', 'Cerrar', { duration: 3000 });
+        // Puedes redirigir al usuario o hacer otras acciones después de la matrícula
+      },
+      error: (error) => {
+        console.error('Error al guardar la matrícula:', error);
+        this._snackBar.open('Error al realizar la matrícula', 'Cerrar', { duration: 3000 });
+      },
+    });
+
+    */
+
+
+    /*
+    
+    
+        private apiUrl = 'TU_API_URL'; // Reemplaza con la URL de tu API
+
+        constructor(private http: HttpClient) { }
+
+        matricular(matricula: any): Observable<any> {
+        return this.http.post(`${this.apiUrl}/matriculas`, matricula);
+  }
+    
+    
+    */
+
+
+
+  }
+
 
 
 }

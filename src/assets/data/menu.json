@@ -11,18 +11,18 @@
     },
     
     {
-        "nombre": "curso",
+        "nombre": "Curso",
         "redirect": "/dashboard/curso"
         
     } ,
     {
-        "nombre": "profesor",
+        "nombre": "Profesor",
         "redirect": "/dashboard/profesor"
         
     } 
     ,
     {
-        "nombre": "Reporstes",
+        "nombre": "Reportes",
         "redirect": "/dashboard/reportes"
         
     }

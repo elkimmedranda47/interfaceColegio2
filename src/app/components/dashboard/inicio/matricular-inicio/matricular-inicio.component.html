@@ -1,0 +1,308 @@
+
+<!--separar 
+
+<div class="containercrearusuario">
+  <mat-toolbar style="background-color: #d9d9d9;">
+      <span>MATRICULA ACADEMICA</span>
+  </mat-toolbar>
+
+  <mat-card appearance="outlined" style="margin-top: 10px;">
+      <mat-card-content>
+
+
+          <form [formGroup]="form" (ngSubmit)="agregarPersona()">
+             
+            
+             <mat-grid-list [cols]="getGridColumns()" rowHeight="70px" [gutterSize]="'10px'">
+                 
+              
+              <mat-grid-tile [colspan]="getColspanId()" [rowspan]="1">
+                      <mat-form-field class="ancho">
+                          <mat-label>ID</mat-label>
+                          <input matInput autocomplete="off" formControlName="idPersona" [readonly]="true" />
+                      </mat-form-field>
+                  </mat-grid-tile>
+
+                  <mat-grid-tile [colspan]="getColspanUsuario()" [rowspan]="1">
+                      <mat-form-field class="ancho">
+                          <mat-label>Email</mat-label>
+                          <input matInput autocomplete="off" formControlName="email" />
+                      </mat-form-field>
+                  </mat-grid-tile>
+
+                  <mat-grid-tile [colspan]="getColspanNombre()" [rowspan]="1">
+                      <mat-form-field class="ancho">
+                          <mat-label>Nombre</mat-label>
+                          <input matInput autocomplete="off" formControlName="nombre" />
+                      </mat-form-field>
+                  </mat-grid-tile>
+
+                  <mat-grid-tile [colspan]="getColspanTipo()" [rowspan]="1">
+                      <mat-form-field class="ancho">
+                          <mat-label>Tipo de Persona</mat-label>
+                          <mat-select formControlName="tipo">
+                              <mat-option *ngFor="let tipo of tiposPersona" [value]="tipo">
+                                  {{ tipo }}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </mat-grid-tile>
+         
+
+
+
+
+         
+
+                  <div class="table-container-wrapper">
+                      <mat-toolbar style="background-color: #d9d9d9;">
+                          <span>Personas</span>
+                          <div class="example-spacer"></div>
+                         
+                      </mat-toolbar>
+
+                      <div *ngIf="listUsuario.length > 0;">
+                          <mat-form-field>
+                              <mat-label>Filter</mat-label>
+                              <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input
+                                  autocomplete="off">
+                          </mat-form-field>
+
+                          <div class="table-container mat-elevation-z8">
+                              <table mat-table [dataSource]="dataSource" matSort>
+                                  <ng-container matColumnDef="idPersona">
+                                      <th mat-header-cell *matHeaderCellDef class="column-id">ID</th>
+                                      <td mat-cell *matCellDef="let element">{{element.idPersona}}</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="nombre">
+                                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                                      <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="apellido">
+                                      <th mat-header-cell *matHeaderCellDef>Apellido</th>
+                                      <td mat-cell *matCellDef="let element">{{element.apellido}}</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="fechaNacimiento">
+                                      <th mat-header-cell *matHeaderCellDef>Fecha Nacimiento</th>
+                                      <td mat-cell *matCellDef="let element">{{element.fechaNacimiento}}</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="email">
+                                      <th mat-header-cell *matHeaderCellDef>Correo</th>
+                                      <td mat-cell *matCellDef="let element">{{element.email}}</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="telefono">
+                                      <th mat-header-cell *matHeaderCellDef>Telefono</th>
+                                      <td mat-cell *matCellDef="let element">{{element.telefono}}</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="tipo">
+                                      <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                                      <td mat-cell *matCellDef="let element">{{element.tipo}}</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="acciones">
+                                      <th mat-header-cell *matHeaderCellDef></th>
+                                      <td mat-cell *matCellDef="let element; let i = index" style="text-align: right;">
+                                          <a class="pointer" (click)="buscarUsuario(element)" style="color: #1878b0"
+                                              matTooltip="Ver Usuario">
+                                              <mat-icon>search</mat-icon>
+                                          </a>
+                                          <a class="pointer" (click)="updateUsuario(element)" style="color: #1f516f"
+                                              matTooltip="Editar Usuario">
+                                              <mat-icon>edit</mat-icon>
+                                          </a>
+                                          <a class="pointer" (click)="eliminarUsuario(element)" style="color: #e15639"
+                                              matTooltip="Eliminar Usuario">
+                                              <mat-icon>delete</mat-icon>
+                                          </a>
+                                      </td>
+                                  </ng-container>
+
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                              </table>
+                          </div>
+
+                          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                              aria-label="Select page of periodic elements">
+                          </mat-paginator>
+                      </div>
+
+                      <h2 *ngIf="listUsuario.length == 0;">No hay usuarios para mostrar</h2>
+                  </div>
+
+                  <mat-grid-tile [colspan]="getColspanBotones()" [rowspan]="1">
+                    
+                      
+                  </mat-grid-tile>
+              </mat-grid-list>
+
+              
+
+          </form>
+
+
+
+      </mat-card-content>
+  </mat-card>
+</div>
+
+-->
+
+<div class="containercrearusuario">
+ 
+  
+  <mat-toolbar style="background-color: #c58787; display: flex; justify-content: space-between;">
+    <span>MATRICULA ACADEMICA</span>
+    <button mat-fab extended color="primary" routerLink="/dashboard" style="border-radius: 8px;">
+        VOLVER
+    </button>
+</mat-toolbar>
+
+  <div class="form-section">
+      <mat-card appearance="outlined" style="margin-top: 10px;">
+          <mat-card-content>
+              <form [formGroup]="form" (ngSubmit)="agregarPersona()">
+                  <mat-grid-list [cols]="getGridColumns()" rowHeight="70px" [gutterSize]="'10px'">
+                      <mat-grid-tile [colspan]="getColspanId()" [rowspan]="1">
+                          <mat-form-field class="ancho">
+                              <mat-label>ID</mat-label>
+                              <input matInput autocomplete="off" formControlName="idPersona" [readonly]="true" />
+                          </mat-form-field>
+                      </mat-grid-tile>
+
+                      <mat-grid-tile [colspan]="getColspanUsuario()" [rowspan]="1">
+                          <mat-form-field class="ancho">
+                              <mat-label>Email</mat-label>
+                              <input matInput autocomplete="off" formControlName="email" />
+                          </mat-form-field>
+                      </mat-grid-tile>
+
+                      <mat-grid-tile [colspan]="getColspanNombre()" [rowspan]="1">
+                          <mat-form-field class="ancho">
+                              <mat-label>Nombre</mat-label>
+                              <input matInput autocomplete="off" formControlName="nombre" />
+                          </mat-form-field>
+                      </mat-grid-tile>
+
+                      <mat-grid-tile [colspan]="getColspanTipo()" [rowspan]="1">
+                          <mat-form-field class="ancho">
+                              <mat-label>Tipo de Persona</mat-label>
+                              <mat-select formControlName="tipo">
+                                  <mat-option *ngFor="let tipo of tiposPersona" [value]="tipo">
+                                      {{ tipo }}
+                                  </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                      </mat-grid-tile>
+
+                      <mat-grid-tile [colspan]="getColspanBotones()" [rowspan]="1">
+
+                         
+
+                        
+
+                      </mat-grid-tile>
+
+                  </mat-grid-list>
+              </form>
+          </mat-card-content>
+      </mat-card>
+  </div>
+
+  <div class="table-section">
+
+      <div class="table-section">
+    <mat-toolbar style="background-color: #c58787; display: flex; justify-content: center;">
+      <span>***</span>
+        <span>CURSOS</span>
+        <span>***</span>
+    </mat-toolbar>
+</div>
+
+      <div *ngIf="listUsuario.length > 0;">
+          <mat-form-field>
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input autocomplete="off">
+          </mat-form-field>
+
+          <div class="table-container mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort>
+
+                  <ng-container matColumnDef="idCurso">
+                      <th mat-header-cell *matHeaderCellDef class="column-id">ID</th>
+                      <td mat-cell *matCellDef="let element">{{element.idCurso}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="nombre">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>nombre</th>
+                      <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="descripcion">
+                      <th mat-header-cell *matHeaderCellDef>descripcion</th>
+                      <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="creditos">
+                      <th mat-header-cell *matHeaderCellDef>fechaMatricula</th>
+                      <td mat-cell *matCellDef="let element">{{element.creditos}}</td>
+                  </ng-container>
+                 
+                  <ng-container matColumnDef="idProfesor">
+                      <th mat-header-cell *matHeaderCellDef>idProfesor</th>
+                      <td mat-cell *matCellDef="let element">{{element.idProfesor}}</td>
+                  </ng-container>
+              
+               
+                  <ng-container matColumnDef="acciones">
+
+                    <th mat-header-cell *matHeaderCellDef></th>
+
+                    <td mat-cell *matCellDef="let element; let i = index" style="text-align: right;">
+                      <button mat-fab extended color="primary" (click)="updateUsuario(element.idPersona, element.idCurso)" style="border-radius: 8px; margin-right: 10px;">
+                        <mat-icon style="color: red;">menu_book</mat-icon>
+                        MATRICULAR
+                    </button>
+
+                        
+                      
+
+                    </td>
+                </ng-container>
+
+                  <!--
+                  <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="text-align: right;">
+                        <button mat-fab extended color="primary" routerLink="/dashboard/matricula-academica/{{element.idCurso}}" style="border-radius: 8px; margin-right: 10px;">
+                          <mat-icon style="color: red;">menu_book</mat-icon>
+                            MATRICULAR
+                        </button>
+                        <a class="pointer" (click)="updateUsuario(element)" style="color: #6f1f24" matTooltip="Editar Usuario">
+                           
+                        </a>
+                    </td>
+                </ng-container>
+                -->
+                
+
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+          </div>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+              aria-label="Select page of periodic elements">
+          </mat-paginator>
+      </div>
+
+      <h2 *ngIf="listUsuario.length == 0;">No hay usuarios para mostrar</h2>
+  </div>
+</div>

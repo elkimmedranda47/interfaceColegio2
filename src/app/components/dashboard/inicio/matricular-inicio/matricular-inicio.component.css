@@ -1,0 +1,30 @@
+.containercrearusuario {
+  margin: 10px;
+}
+
+.ancho {
+  width: 100%;
+}
+
+.table-container-wrapper {
+  margin-top: 20px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.column-id {
+  width: 50px;
+  padding-right: 0;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+@media (min-width: 600px) {
+  .containercrearusuario {
+      margin: 20px 100px;
+  }
+}
